@@ -4,7 +4,8 @@
               [vquiz.events]
               [vquiz.subs]
               [vquiz.views :as views]
-              [vquiz.config :as config]))
+              [vquiz.config :as config]
+              [youtube-fx.core]))
 
 
 (defn dev-setup []

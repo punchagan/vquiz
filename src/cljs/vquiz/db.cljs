@@ -2,4 +2,5 @@
 
 (def default-db
   {:quiz-title "Welcome to VQuiz"
-   :videos ["https://www.youtube.com/embed/STvlKbbqVy4"]})
+   :quiz-intro "This is a quiz created by VQuiz. Click on start to begin the quiz!"
+   :videos ["gXq-14lV79s"]})

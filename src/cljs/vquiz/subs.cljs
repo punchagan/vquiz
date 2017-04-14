@@ -8,6 +8,16 @@
    (:quiz-title db)))
 
 (re-frame/reg-sub
+ :quiz-intro
+ (fn [db]
+   (:quiz-intro db)))
+
+(re-frame/reg-sub
+ :quiz-started
+ (fn [db]
+   (:quiz-started db)))
+
+(re-frame/reg-sub
  :videos
  (fn [db]
    (:videos db)))
