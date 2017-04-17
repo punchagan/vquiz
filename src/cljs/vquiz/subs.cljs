@@ -18,6 +18,6 @@
    (:quiz-started db)))
 
 (re-frame/reg-sub
- :videos
+ :questions
  (fn [db]
-   (:videos db)))
+   (:questions db)))

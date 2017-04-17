@@ -11,6 +11,8 @@
   [:youtube-player
    {:height "350"
     :width "480"
+    ;; fixme: Hiding controls doesn't seem to be working
+    :player-vars {:controls "0" :autoplay "1"}
     :events {:on-ready [:player-ready]
              :on-state-change [:player-state-change]}}])
 
@@ -25,8 +27,8 @@
 
 (re-frame/reg-event-fx
  :show-next-question
- (fn [cofx [_ id]]
-   {:youtube/load-video-by-id [:youtube-player id]}))
+ (fn [cofx [_ question]]
+   {:youtube/load-video-by-id [:youtube-player question]}))
 
 (re-frame/reg-event-fx
  :player-ready
@@ -34,7 +36,7 @@
    (let [db (:db cofx)]
      {:dispatch [:show-next-question
                  ;; FIXME: Get the video id based on current question
-                 (-> db :videos first)]})))
+                 (-> db :questions :1)]})))
 
 (re-frame/reg-event-fx
  :player-state-change
