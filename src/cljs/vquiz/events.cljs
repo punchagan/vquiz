@@ -15,8 +15,15 @@
   [:youtube-player
    {:height "350"
     :width "480"
-    ;; fixme: Hiding controls doesn't seem to be working
-    :player-vars {:controls "0" :autoplay "1"}
+    :playerVars {:controls 0
+                 :autoplay 1
+                 :enablejsapi 1
+                 :fs 0
+                 :modestbranding 1
+                 :rel 0
+                 :showinfo 0
+                 :iv_load_policy 3
+                 :disablekb 1}
     :events {:on-ready [:player-ready]
              :on-state-change [:player-state-change]}}])
 
