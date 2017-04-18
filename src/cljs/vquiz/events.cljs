@@ -43,9 +43,12 @@
      {:dispatch [:load-next-question
                  (-> db :questions qid)]
       :db (assoc db
+                 ;; fixme: Have a better way of managing all this state -
+                 ;; functions to initialize, reset this state?
                  :current-question qid
                  :display-question nil
-                 :correct-answer nil)})))
+                 :correct-answer nil
+                 :video-ended? nil)})))
 
 (re-frame/reg-event-db
  :verify-answer
@@ -74,6 +77,10 @@
     (when (nil? answer-correct?)
       {:dispatch-later [{:ms (* 1000 display-at) :dispatch [:pause-video]}
                         {:ms (* 1000 display-at) :dispatch [:display-question]}]})))
+
+(defmethod player-state-change +video-ended+
+  [_ db]
+  {:db (assoc db :video-ended? true)})
 
 (defmethod player-state-change :default
   [e _]

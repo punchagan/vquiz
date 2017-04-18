@@ -28,7 +28,7 @@
 (defn resume-video []
   (re-frame/dispatch [:resume-video]))
 
-(defn display [question answer-correct?]
+(defn display [question answer-correct? video-ended?]
   [:div
    [:p (:text question)]
    (let [correct-answer (db/correct-answer question)]
@@ -44,8 +44,9 @@
    (if (nil? answer-correct?)
      [:button {:on-click verify-answer} "Check Answer"]
      [:span
-      [:button {:on-click resume-video} "Resume Video"]
-      [:button "Next Question"]])])
+      [:button "Next Question"]
+      (when (not video-ended?)
+        [:button {:on-click resume-video} "Resume Video"])])])
 
 (defn youtube-player-initialized? []
   (let [youtube-player (js/document.querySelector "#youtube-player")]
@@ -62,7 +63,8 @@
         quiz-intro (re-frame/subscribe [:quiz-intro])
         quiz-started (re-frame/subscribe [:quiz-started])
         display-question (re-frame/subscribe [:display-question])
-        answer-correct? (re-frame/subscribe [:answer-correct?])]
+        answer-correct? (re-frame/subscribe [:answer-correct?])
+        video-ended? (re-frame/subscribe [:video-ended?])]
     (fn []
       [:div
        [:h1 @quiz-title]
@@ -74,4 +76,4 @@
          (when (not (youtube-player-initialized?))
            (initialize-quiz-ui)))
        (when @display-question
-         (display @display-question @answer-correct?))])))
+         (display @display-question @answer-correct? @video-ended?))])))

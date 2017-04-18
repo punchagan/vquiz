@@ -31,3 +31,8 @@
  :answer-correct?
  (fn [db]
    ( :answer-correct? db)))
+
+(re-frame/reg-sub
+ :video-ended?
+ (fn [db]
+   ( :video-ended? db)))
