@@ -1,11 +1,7 @@
 (ns vquiz.events
-    (:require [re-frame.core :as re-frame]
-              [vquiz.db :as db]))
-
-(re-frame/reg-event-db
- :initialize-db
- (fn [_ _]
-   db/default-db))
+  (:require [re-frame.core :as re-frame]
+            [ajax.core :as ajax]
+            [vquiz.db :as db]))
 
 (def ^:const +video-ended+ 0)
 (def ^:const +video-playing+ 1)
@@ -26,6 +22,26 @@
                  :disablekb 1}
     :events {:on-ready [:player-ready]
              :on-state-change [:player-state-change]}}])
+
+
+(re-frame/reg-event-fx
+ :initialize-db
+ (fn [_ [_ url]]
+   {:http-xhrio {:method :get
+                 :uri url
+                 :timeout 8000
+                 :response-format (ajax/json-response-format {:keywords? true})
+                 :on-success [:quiz-db-fetched]
+                 :on-failure [:quiz-db-fetch-failed]}}))
+
+(re-frame/reg-event-db
+ :quiz-db-fetched
+ (fn [_ [_ data]]
+   data))
+
+(re-frame/reg-event-db
+ :quiz-db-fetch-failed
+ (fn [db _] db))
 
 (re-frame/reg-event-fx
  :initialize-youtube

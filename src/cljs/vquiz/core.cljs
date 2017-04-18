@@ -5,7 +5,8 @@
               [vquiz.subs]
               [vquiz.views :as views]
               [vquiz.config :as config]
-              [youtube-fx.core]))
+              [youtube-fx.core]
+              [day8.re-frame.http-fx]))
 
 
 (defn dev-setup []
@@ -19,6 +20,6 @@
                   (.getElementById js/document "app")))
 
 (defn ^:export init []
-  (re-frame/dispatch-sync [:initialize-db])
+  (re-frame/dispatch-sync [:initialize-db "json/sample-db.json"])
   (dev-setup)
   (mount-root))

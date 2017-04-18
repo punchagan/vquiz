@@ -3,7 +3,8 @@
                  [org.clojure/clojurescript "1.9.229"]
                  [reagent "0.6.0"]
                  [re-frame "0.9.2"]
-                 [re-frame-youtube-fx "0.1.1"]]
+                 [re-frame-youtube-fx "0.1.1"]
+                 [day8.re-frame/http-fx "0.1.3"]]
 
   :plugins [[lein-cljsbuild "1.1.4"]]
 

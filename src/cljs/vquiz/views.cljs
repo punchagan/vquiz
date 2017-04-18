@@ -69,14 +69,16 @@
         answer-correct? (re-frame/subscribe [:answer-correct?])
         video-ended? (re-frame/subscribe [:video-ended?])]
     (fn []
-      [:div
-       [:h1 @quiz-title]
-       [:div {:id :youtube-player}]
-       (if (not @quiz-started)
-         [intro-panel @quiz-intro]
-         ;; Youtube player gets initialized in an on-click method, but
-         ;; developing with figwheel breaks this, and hence this hack
-         (when (not (youtube-player-initialized?))
-           (initialize-quiz-ui)))
-       (when @display-question
-         (display @display-question @answer-correct? @video-ended?))])))
+      (if (some? @quiz-title)
+        [:div
+         [:h1 @quiz-title]
+         [:div {:id :youtube-player}]
+         (if (not @quiz-started)
+           [intro-panel @quiz-intro]
+           ;; Youtube player gets initialized in an on-click method, but
+           ;; developing with figwheel breaks this, and hence this hack
+           (when (not (youtube-player-initialized?))
+             (initialize-quiz-ui)))
+         (when @display-question
+           (display @display-question @answer-correct? @video-ended?))]
+        [:p "Loading ..."]))))
