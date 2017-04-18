@@ -6,7 +6,8 @@
               [vquiz.views :as views]
               [vquiz.config :as config]
               [youtube-fx.core]
-              [day8.re-frame.http-fx]))
+              [day8.re-frame.http-fx]
+              [clojure.string :refer [split]]))
 
 
 (defn dev-setup []
@@ -19,7 +20,19 @@
   (reagent/render [views/main-panel]
                   (.getElementById js/document "app")))
 
+(defn parse-params
+  "Parse URL parameters into a hashmap"
+  []
+  (let [param-strs (-> (.-location js/window) .-href (split #"\?") last (split #"\&"))]
+    (into {} (for [[k v] (map #(split % #"=") param-strs)]
+               [(keyword k) v]))))
+
+(defn db-url []
+  (let [default-url "json/sample-db.json"
+        params (parse-params)]
+    (:url params default-url)))
+
 (defn ^:export init []
-  (re-frame/dispatch-sync [:initialize-db "json/sample-db.json"])
   (dev-setup)
+  (re-frame/dispatch-sync [:initialize-db (db-url)])
   (mount-root))
