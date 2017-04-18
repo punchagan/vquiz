@@ -21,3 +21,13 @@
  :questions
  (fn [db]
    (:questions db)))
+
+(re-frame/reg-sub
+ :display-question
+ (fn [db]
+   (:display-question db)))
+
+(re-frame/reg-sub
+ :answer-correct?
+ (fn [db]
+   ( :answer-correct? db)))
