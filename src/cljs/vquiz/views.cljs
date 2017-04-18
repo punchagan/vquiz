@@ -28,6 +28,9 @@
 (defn resume-video []
   (re-frame/dispatch [:resume-video]))
 
+(defn load-next-question []
+  (re-frame/dispatch [:load-next-question]))
+
 (defn display [question answer-correct? video-ended?]
   [:div
    [:p (:text question)]
@@ -44,7 +47,7 @@
    (if (nil? answer-correct?)
      [:button {:on-click verify-answer} "Check Answer"]
      [:span
-      [:button "Next Question"]
+      [:button {:on-click load-next-question} "Next Question"]
       (when (not video-ended?)
         [:button {:on-click resume-video} "Resume Video"])])])
 

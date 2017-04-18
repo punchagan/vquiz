@@ -38,24 +38,23 @@
 
 (re-frame/reg-event-fx
  :load-next-question
- (fn [cofx [_ question]]
-   {:youtube/load-video-by-id [:youtube-player question]}))
+ (fn [cofx _]
+   (let [db (:db cofx)
+         qid (db/next-question-id db)]
+     (when (some? qid)
+       {:youtube/load-video-by-id [:youtube-player (-> db :questions qid)]
+        :db (assoc db
+                   ;; fixme: Have a better way of managing all this state -
+                   ;; functions to initialize, reset this state?
+                   :current-question qid
+                   :display-question nil
+                   :answer-correct? nil
+                   :video-ended? nil)}))))
 
 (re-frame/reg-event-fx
  :player-ready
  (fn [cofx [_ event]]
-   (let [db (:db cofx)
-         ;; FIXME: Replace stub with actual code
-         qid :1]
-     {:dispatch [:load-next-question
-                 (-> db :questions qid)]
-      :db (assoc db
-                 ;; fixme: Have a better way of managing all this state -
-                 ;; functions to initialize, reset this state?
-                 :current-question qid
-                 :display-question nil
-                 :correct-answer nil
-                 :video-ended? nil)})))
+   {:dispatch [:load-next-question]}))
 
 (re-frame/reg-event-db
  :verify-answer
