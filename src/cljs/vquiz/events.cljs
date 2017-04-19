@@ -63,6 +63,7 @@
                    ;; fixme: Have a better way of managing all this state -
                    ;; functions to initialize, reset this state?
                    :current-question qid
+                   :quiz-progress (db/quiz-progress db)
                    :display-question nil
                    :answer-correct? nil
                    :video-ended? nil)}))))

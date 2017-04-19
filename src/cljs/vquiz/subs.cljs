@@ -13,6 +13,11 @@
    (:quiz-intro db)))
 
 (re-frame/reg-sub
+ :quiz-progress
+ (fn [db]
+   (:quiz-progress db)))
+
+(re-frame/reg-sub
  :quiz-started
  (fn [db]
    (:quiz-started db)))

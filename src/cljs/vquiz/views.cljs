@@ -73,18 +73,27 @@
    [:p {:class "lead"} intro-text]
    [start-button]])
 
+(defn display-progress [progress]
+  (let [{current :current total :total} progress
+        percentage (* 100 (/ current total))]
+    [:div {:class "progress"}
+     [:div {:class "progress-bar" :style {:width (str percentage "%")}}
+      (str current " / " total)]]))
+
 (defn main-panel []
   (let [quiz-title (re-frame/subscribe [:quiz-title])
         quiz-intro (re-frame/subscribe [:quiz-intro])
         quiz-started (re-frame/subscribe [:quiz-started])
         display-question (re-frame/subscribe [:display-question])
         answer-correct? (re-frame/subscribe [:answer-correct?])
-        video-ended? (re-frame/subscribe [:video-ended?])]
+        video-ended? (re-frame/subscribe [:video-ended?])
+        quiz-progress (re-frame/subscribe [:quiz-progress])]
     (fn []
       (if (some? @quiz-title)
         [:div
          [:h1 {:class "display-4"} @quiz-title]
-         [:div {:id :youtube-player}]
+         [:div {:class ""}
+          [:div {:id :youtube-player}]]
          (if (not @quiz-started)
            [intro-panel @quiz-intro]
            ;; Youtube player gets initialized in an on-click method, but
