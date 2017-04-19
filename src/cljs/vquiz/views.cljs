@@ -44,8 +44,9 @@
    (let [correct-answer (db/correct-answer question)]
      (cond
        (nil? answer-correct?)
-       (for [ans (:answers question)]
-         (radio-button "answers" ans))
+       [:div {:class "form-group"}
+        (for [ans (:answers question)]
+          (radio-button "answers" ans))]
        (true? answer-correct?)
        [:p {:class "alert alert-success"} (str "Correct! The answer is " correct-answer)]
        (false? answer-correct?)
