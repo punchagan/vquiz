@@ -23,7 +23,8 @@
 
 (defn verify-answer [e]
   (let [selected-answer (js/document.querySelector "input[name=answers]:checked")]
-    (re-frame/dispatch [:verify-answer selected-answer])))
+    (when selected-answer
+      (re-frame/dispatch [:verify-answer selected-answer]))))
 
 (defn resume-video []
   (re-frame/dispatch [:resume-video]))
