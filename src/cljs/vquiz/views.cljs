@@ -7,7 +7,10 @@
   (re-frame/dispatch [:initialize-quiz]))
 
 (defn start-button []
-  [:button {:on-click initialize-quiz-ui}
+  [:a {:class "btn btn-primary btn-lg"
+       :role "button"
+       :href "#"
+       :on-click initialize-quiz-ui}
    "Start Quiz!"])
 
 (defn make-id [group value]
@@ -16,10 +19,13 @@
 
 (defn radio-button [name value]
   ^{:key (make-id name value)}
-  [:span
-   [:input {:type "radio" :name name :value value}]
-   [:span {:on-click (fn [e] (aset (-> e .-target .-previousSibling) "checked" true))} value]
-   [:br]])
+  [:div {:class "input-group"}
+   [:span {:class "input-group-addon"}
+    [:input {:type "radio" :name name :value value}]]
+   [:span
+    {:on-click (fn [e] (aset (-> e .-target .-previousSibling .-firstChild) "checked" true))
+     :class "form-control"}
+    value]])
 
 (defn verify-answer [e]
   (let [selected-answer (js/document.querySelector "input[name=answers]:checked")]
@@ -34,23 +40,27 @@
 
 (defn display [question answer-correct? video-ended?]
   [:div
-   [:p (:text question)]
+   [:p {:class "lead"} (:text question)]
    (let [correct-answer (db/correct-answer question)]
      (cond
        (nil? answer-correct?)
        (for [ans (:answers question)]
-          (radio-button "answers" ans))
+         (radio-button "answers" ans))
        (true? answer-correct?)
-       [:p (str "Correct! The answer is " correct-answer)]
+       [:p {:class "alert alert-success"} (str "Correct! The answer is " correct-answer)]
        (false? answer-correct?)
-       [:p (str "Sorry! The correct answer is " correct-answer)]))
+       [:p {:class "alert alert-danger"} (str "Sorry! The correct answer is " correct-answer)]))
 
    (if (nil? answer-correct?)
-     [:button {:on-click verify-answer} "Check Answer"]
-     [:span
-      [:button {:on-click load-next-question} "Next Question"]
+     [:button {:class "btn btn-primary"
+               :on-click verify-answer} "Check Answer"]
+     [:span {:class "btn-group"}
+      [:button {:class "btn btn-primary"
+                :on-click load-next-question}
+       "Next Question"]
       (when (not video-ended?)
-        [:button {:on-click resume-video} "Resume Video"])])])
+        [:button {:on-click resume-video
+                  :class "btn btn-secondary"} "Resume Video"])])])
 
 (defn youtube-player-initialized? []
   (let [youtube-player (js/document.querySelector "#youtube-player")]
@@ -59,7 +69,7 @@
 
 (defn intro-panel [intro-text]
   [:div
-   [:p intro-text]
+   [:p {:class "lead"} intro-text]
    [start-button]])
 
 (defn main-panel []
@@ -72,7 +82,7 @@
     (fn []
       (if (some? @quiz-title)
         [:div
-         [:h1 @quiz-title]
+         [:h1 {:class "display-4"} @quiz-title]
          [:div {:id :youtube-player}]
          (if (not @quiz-started)
            [intro-panel @quiz-intro]
