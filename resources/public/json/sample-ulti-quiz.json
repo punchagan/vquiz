@@ -1,0 +1,39 @@
+{
+    "quiz-title": "Welcome to Ulti-Quiz",
+    "quiz-intro": "This is a video quiz to help Ultimate players (in other words, refrees -- since it is self refereed) get better at the rules of the sport.  Hope it helps you become better aware of the rules, and in turn makes you a better player!",
+    "questions": {
+        "1": {
+            "video-id": "STvlKbbqVy4",
+            "start-seconds": 630,
+            "end-seconds": 642,
+            "question": {
+                "text": "An uncontested pick is called in the stack at Stall 5. How does play continue?",
+                "answers": [
+                    "Defense catches up; Stall resumes at 5",
+                    "Defense catches up; Stall goes back to 0",
+                    "Offense player goes back to their mark; Stall resumes at 5",
+                    "Offense player goes back to their mark; Stall goes back to 0",
+                ],
+                "correct-answer": 0,
+                "display-at": 2.5
+            }
+        },
+
+        "2": {
+            "video-id": "aDqUYnv38Bw",
+            "start-seconds": 390,
+            "end-seconds": 425,
+            "question": {
+                "text": "A foul is called by the thrower on their mark. Stall count was at 2. The foul is uncontested. How does play continue?",
+                "answers": [
+                    "Disc goes back; Players reset to positions when throw was being made; Stall resumes from 2",
+                    "Disc goes back; Players reset to positions when throw was being made; Stall restarts at 0",
+                    "Disc stays with receiver and it is a score",
+                    "Disc stays with receiver who goes back to the goal line and starts play",
+                ],
+                "correct-answer": 1,
+                "display-at": 21
+            }
+        }
+    }
+}
