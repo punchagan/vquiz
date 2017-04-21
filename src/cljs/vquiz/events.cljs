@@ -9,7 +9,6 @@
 
 (def player-data
   {:playerVars {:controls 0
-                 :autoplay 1
                  :enablejsapi 1
                  :fs 0
                  :modestbranding 1
@@ -58,7 +57,7 @@
    (let [db (:db cofx)
          qid (db/next-question-id db)]
      (when (some? qid)
-       {:youtube/load-video-by-id [:youtube-player (-> db :questions qid)]
+       {:youtube/cue-video-by-id [:youtube-player (-> db :questions qid)]
         :db (assoc db
                    ;; fixme: Have a better way of managing all this state -
                    ;; functions to initialize, reset this state?
