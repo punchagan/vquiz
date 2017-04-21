@@ -2,8 +2,19 @@
   (:require [re-frame.core :as re-frame]
             [vquiz.db :as db]))
 
+(def ^:const player-default-width 640)
+(def ^:const player-default-height 360)
+
+(defn compute-player-size []
+  (let [window-height (.-innerHeight js/window)
+        window-width (.-clientWidth (js/document.querySelector "#app"))
+        height-ratio (/ window-height player-default-height)
+        width-ratio (/ window-width player-default-width)
+        ratio (* 0.9 (min height-ratio width-ratio))]
+    [(int (* ratio player-default-height)) (int (* ratio player-default-width))]))
+
 (defn initialize-quiz-ui []
-  (re-frame/dispatch [:initialize-youtube])
+  (re-frame/dispatch [:initialize-youtube (compute-player-size)])
   (re-frame/dispatch [:initialize-quiz]))
 
 (defn start-button []
@@ -92,7 +103,7 @@
       (if (some? @quiz-title)
         [:div
          [:h1 {:class "display-4"} @quiz-title]
-         [:div {:class ""}
+         [:div {:class "container-fluid"}
           [:div {:id :youtube-player}]]
          (if (not @quiz-started)
            [intro-panel @quiz-intro]

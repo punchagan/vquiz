@@ -7,11 +7,8 @@
 (def ^:const +video-playing+ 1)
 (def ^:const +video-paused+ 2)
 
-(def ^:const player-data
-  [:youtube-player
-   {:height "350"
-    :width "480"
-    :playerVars {:controls 0
+(def player-data
+  {:playerVars {:controls 0
                  :autoplay 1
                  :enablejsapi 1
                  :fs 0
@@ -21,7 +18,7 @@
                  :iv_load_policy 3
                  :disablekb 1}
     :events {:on-ready [:player-ready]
-             :on-state-change [:player-state-change]}}])
+             :on-state-change [:player-state-change]}})
 
 
 (re-frame/reg-event-fx
@@ -45,7 +42,10 @@
 
 (re-frame/reg-event-fx
  :initialize-youtube
- (constantly {:youtube/initialize-player player-data}))
+ (fn [_ [_ [h w]]]
+   (let [player-dynamic-data {:height h :width w}
+         data (merge player-data player-dynamic-data)]
+     {:youtube/initialize-player [:youtube-player data]})))
 
 (re-frame/reg-event-db
  :initialize-quiz
