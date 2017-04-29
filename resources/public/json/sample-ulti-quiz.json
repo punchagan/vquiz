@@ -34,6 +34,23 @@
                 "correct-answer": 1,
                 "display-at": 21
             }
+        },
+
+        "3": {
+            "video-id": "nFdqYRrIzBs",
+            "start-seconds": 3068,
+            "end-seconds": 3108,
+            "question": {
+                "text": "An off-side is called on the team making the pull. How does play continue?",
+                "answers": [
+                    "Disc goes back; It is a re-pull",
+                    "Disc stays with the offense",
+                    "Offense gets a score"
+                ],
+                "correct-answer": 0,
+                "display-at": 4
+            }
+
         }
     }
 }
