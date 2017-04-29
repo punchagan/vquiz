@@ -91,6 +91,9 @@
      [:div {:class "progress-bar" :style {:width (str percentage "%")}}
       (str current " / " total)]]))
 
+(defn display-disable-click []
+  [:div {:style {:height "100%" :width "100%" :position "absolute"}}])
+
 (defn main-panel []
   (let [quiz-title (re-frame/subscribe [:quiz-title])
         quiz-intro (re-frame/subscribe [:quiz-intro])
@@ -104,6 +107,8 @@
         [:div
          [:h1 {:class "display-4"} @quiz-title]
          [:div {:class "container-fluid"}
+          (when @display-question
+            (display-disable-click))
           [:div {:id :youtube-player}]]
          (if (not @quiz-started)
            [intro-panel @quiz-intro]
