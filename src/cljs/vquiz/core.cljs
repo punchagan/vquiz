@@ -10,11 +10,6 @@
               [clojure.string :refer [split]]))
 
 
-(defn dev-setup []
-  (when config/debug?
-    (enable-console-print!)
-    (println "dev mode")))
-
 (defn mount-root []
   (re-frame/clear-subscription-cache!)
   (reagent/render [views/main-panel]
@@ -33,6 +28,6 @@
     (:url params default-url)))
 
 (defn ^:export init []
-  (dev-setup)
+  (enable-console-print!)
   (re-frame/dispatch-sync [:initialize-db (db-url)])
   (mount-root))
